@@ -1,8 +1,10 @@
+# TODO: add docstrings!
+
+import journal
+
 def main():
     print_header()
-    load_journal()
     run_event_loop()
-    save_journal()
 
 
 def print_header():
@@ -15,7 +17,8 @@ def run_event_loop():
     print('What would you like to do?')
 
     action = None
-    journal_data = []
+    journal_name = 'default'
+    journal_data = journal.load(journal_name)
 
     while action != 'X':
         action = input('[A]dd, [L]ist, or E[x]it: ')
@@ -24,14 +27,16 @@ def run_event_loop():
             add_entry(journal_data)
         elif action == 'L':
             list_entries(journal_data)
-        elif action != 'X':
+        elif action and action != 'X':
             print(f"I don't understand '{action}'.")
 
+    journal.save(journal_name, journal_data)
     print("Done...goodbye!")
 
 
 def add_entry(data):
-    data.append(input('Type your entry and press <ENTER>: '))
+    text = input('Type your entry and press <ENTER>: ')
+    journal.add_entry(text, data)
 
 
 def list_entries(data):
@@ -39,17 +44,7 @@ def list_entries(data):
         print('There are no entries to list.')
     else:
         for index, entry in enumerate(reversed(data)):
-            print(f'[{index+1}] {entry}')
-
-
-def load_journal():
-    print('... loading journal entries ...')
-    print('... loading complete ...')
-
-
-def save_journal():
-    print('... saving journal entries ...')
-    print('... saving complete ...')
+            print(entry)
 
 
 if __name__ == '__main__':
