@@ -1,3 +1,5 @@
+import random
+
 from actors import Creature, Wizard
 
 
@@ -25,6 +27,9 @@ def game_loop():
     hero = Wizard('Tim', 250)
 
     while (True):
+        active_creature = random.choice(creatures)
+        print(f'A {active_creature.name} has appeared.')
+
         cmd = input('Would you like to [a]ttack, [r]un away, or [l]ook around? ')
 
         if cmd == 'a':
